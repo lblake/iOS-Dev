@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var people = [Person]()
+    
+    var PersonIndexPath: NSIndexPath? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,9 +76,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let ac = UIAlertController(title: "Rename person", message: nil, preferredStyle: .alert)
         ac.addTextField()
         
+        
+        
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
-        ac.addAction(UIAlertAction(title: "Delete Photos",  style: .destructive))
         
         
         
@@ -87,7 +90,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             self?.collectionView.reloadData()
         })
         
-        present(ac, animated: true)
+        present(ac, animated: true, completion: nil)
+        
+        ac.addAction(UIAlertAction(title: "Delete", style:.destructive, handler: { (action) in
+            
+            self.people.remove(at:indexPath.row)
+            collectionView.deleteItems(at:[indexPath])
+            
+            
+            
+        }))
+    
+        
         
     }
     
@@ -96,7 +110,6 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         return paths[0]
     
     }
-    
     
     
 }
